@@ -1,9 +1,9 @@
 import IUser from "../IUser"
 
-interface IAuthResponce {
+interface IAuthResponse {
     refreshToken: string
     accessToken: string
     user: IUser
 }
 
-export default IAuthResponce
+export default IAuthResponse

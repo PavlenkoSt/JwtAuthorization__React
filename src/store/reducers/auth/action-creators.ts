@@ -1,6 +1,6 @@
 import axios from 'axios'
 import IUser from '../../../models/IUser'
-import IAuthResponce from '../../../models/responce/IAuthResponce'
+import IAuthResponse from '../../../models/response/IAuthResponse'
 import AuthService from '../../../services/AuthService'
 import usersActionCreators from '../users/action-creators'
 import { AppDispatchType } from './../../index'
@@ -14,35 +14,33 @@ const authActionCreators = {
 
     loginThunk: (email: string, password: string) => async (dispatch: AppDispatchType) => {
         try{
-            const responce = await AuthService.login(email, password)
+            const response = await AuthService.login(email, password)
             
-            if (responce.status === 200) {
-                localStorage.setItem('token', responce.data.accessToken)
+            if (response.status === 200) {
+                localStorage.setItem('token', response.data.accessToken)
                 dispatch(authActionCreators.setAuth(true))
-                dispatch(authActionCreators.setUser(responce.data.user))
+                dispatch(authActionCreators.setUser(response.data.user))
                 return
             }
 
         } catch (e: any) {
-            console.log(e.message)
-            dispatch(authActionCreators.setError('Неверная почта или пароль'))
+            dispatch(authActionCreators.setError(e?.response?.data?.message))
         }
     },
 
     registerThunk: (email: string, password: string) => async (dispatch: AppDispatchType) => {
         try{
-            const responce = await AuthService.register(email, password)
+            const response = await AuthService.register(email, password)
             
-            if (responce.status === 200) {
-                localStorage.setItem('token', responce.data.accessToken)
+            if (response.status === 200) {
+                localStorage.setItem('token', response.data.accessToken)
                 dispatch(authActionCreators.setAuth(true))
-                dispatch(authActionCreators.setUser(responce.data.user))
+                dispatch(authActionCreators.setUser(response.data.user))
                 return
             }
 
         } catch (e: any) {
-            console.dir(e.message)
-            dispatch(authActionCreators.setError('Неккоректная почта или пароль'))
+            dispatch(authActionCreators.setError(e?.response?.data?.message))
         }
     },
 
@@ -54,24 +52,24 @@ const authActionCreators = {
             dispatch(authActionCreators.setUser({} as IUser))
             dispatch(usersActionCreators.setUsers([] as IUser[]))
         } catch (e: any) {
-            console.log(e.message)
+            dispatch(authActionCreators.setError(e?.response?.data?.message))
         }
     },
 
     checkAuth: () => async (dispatch: AppDispatchType) => {
         dispatch(authActionCreators.setLoading(true))
         try{
-            const responce = await axios.get<IAuthResponce>('http://localhost:5000/api/refresh', { withCredentials: true })
+            const response = await axios.get<IAuthResponse>('http://localhost:5000/api/refresh', { withCredentials: true })
 
-            if (responce.status === 200) {
-                localStorage.setItem('token', responce.data.accessToken)
+            if (response.status === 200) {
+                localStorage.setItem('token', response.data.accessToken)
                 dispatch(authActionCreators.setAuth(true))
-                dispatch(authActionCreators.setUser(responce.data.user))
+                dispatch(authActionCreators.setUser(response.data.user))
                 return
             }
 
         } catch (e) {
-            console.log(e)
+            console.log(e);
         } finally {
             dispatch(authActionCreators.setLoading(false))
         }

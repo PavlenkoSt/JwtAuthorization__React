@@ -9,10 +9,10 @@ const usersActionCreators = {
 
     setUsersThunk: () => async (dispatch: AppDispatchType) => {
         try{
-            const responce = await UsersService.getAllUsers()
+            const response = await UsersService.getAllUsers()
 
-            if(responce.status === 200){
-                dispatch(usersActionCreators.setUsers(responce.data.users))
+            if(response.status === 200){
+                dispatch(usersActionCreators.setUsers(response.data.users))
             }
         } catch (e) {
             console.log(e)
