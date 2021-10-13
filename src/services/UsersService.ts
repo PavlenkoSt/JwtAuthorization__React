@@ -3,7 +3,7 @@ import IUser from '../models/IUser'
 
 class UsersService {
     static async getAllUsers () {
-        return API.get<IUser[]>('/users')
+        return API.get<{ users: IUser[]}>('/users')
     }
 }
 

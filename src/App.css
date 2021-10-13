@@ -16,6 +16,9 @@
 
 .content{
     min-height: calc(100vh - 60px) !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .greet{
@@ -71,4 +74,8 @@
 .error{
     color: red;
     font-size: 12px;
+}
+
+.users-list{
+    margin-top: 20px;
 }

@@ -5,9 +5,11 @@ import Form from './components/Form'
 import Header from './components/Header'
 import useTypedSelector from './hooks/useTypedSelector'
 import authActionCreators from './store/reducers/auth/action-creators'
+import usersActionCreators from './store/reducers/users/action-creators'
 
 const App = () => {
     const { auth, error, loading, userData } = useTypedSelector(state => state.authReducer)
+    const { users } = useTypedSelector(state => state.usersReducer)
 
     const dispatch = useDispatch()
 
@@ -18,7 +20,7 @@ const App = () => {
     }, [])
 
     const getUsers = () => {
-        
+        dispatch(usersActionCreators.setUsersThunk())
     }
 
     if (loading) {
@@ -43,10 +45,15 @@ const App = () => {
             <Header />
             <div className='content'>
                 <div className='greet'>Вы в системе под { userData.email }</div> 
+
                 <button 
                     className='btn'
                     onClick={ getUsers }
                 >Получить всех пользователей</button>
+
+                <div className='users-list'>
+                    { users.map((user, idx) => <div key={ user.email }>{ idx + 1 }. { user.email }</div>) }
+                </div>
             </div>   
         </div>
     )
