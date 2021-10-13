@@ -3,19 +3,18 @@ import Form from './components/Form'
 import useTypedSelector from './hooks/useTypedSelector'
 
 const App = () => {
-    const { auth } = useTypedSelector(state => state.authReducer)
-
-    console.log(auth);
-
-    if (!auth) {
-        <div>
-            <Form />
-        </div>
-    }
+    const { auth, error } = useTypedSelector(state => state.authReducer)
 
     return (
         <div>
-            Вы вошли!
+            { 
+                auth 
+                ? <div>Вы вошли</div>
+                : <div>
+                    <Form />
+                    { error && error }
+                </div> 
+            }
         </div>
     )
 }

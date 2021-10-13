@@ -1,9 +1,11 @@
 export type AuthStateType = {
-    auth: boolean
+    auth: boolean,
+    error: string,
 }
 
 export enum AuthActionTypes {
-    SET_AUTH = 'SET_AUTH'
+    SET_AUTH = 'SET_AUTH',
+    SET_ERRORS = 'SET_ERRORS'
 }
 
 type SetAuth = {
@@ -11,5 +13,11 @@ type SetAuth = {
     payload: boolean
 }
 
+type SetErrors = {
+    type: AuthActionTypes.SET_ERRORS
+    payload: string
+}
+
 export type AuthActionCreators = 
-    SetAuth
+    SetAuth |
+    SetErrors 
