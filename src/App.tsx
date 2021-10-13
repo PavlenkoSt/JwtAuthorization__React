@@ -1,5 +1,6 @@
 import './App.css'
 import Form from './components/Form'
+import Header from './components/Header'
 import useTypedSelector from './hooks/useTypedSelector'
 
 const App = () => {
@@ -9,7 +10,10 @@ const App = () => {
         <div>
             { 
                 auth 
-                ? <div>Вы вошли</div>
+                ? <div>
+                    <Header />
+                    <div>Вы вошли</div>    
+                </div>
                 : <div>
                     <Form />
                     { error && error }
