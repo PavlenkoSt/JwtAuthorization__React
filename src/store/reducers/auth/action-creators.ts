@@ -1,3 +1,5 @@
+import axios from 'axios'
+import IAuthResponce from '../../../models/responce/IAuthResponce'
 import AuthService from '../../../services/AuthService'
 import { AppDispatchType } from './../../index'
 import { AuthActionTypes } from "./types"
@@ -45,6 +47,21 @@ const authActionCreators = {
             dispatch(authActionCreators.setAuth(false))
         } catch (e: any) {
             console.log(e.message)
+        }
+    },
+
+    checkAuth: () => async (dispatch: AppDispatchType) => {
+        try{
+            const responce = await axios.get<IAuthResponce>('http://localhost:5000/api/refresh', { withCredentials: true })
+
+            if (responce.status === 200) {
+                localStorage.setItem('token', responce.data.accessToken)
+                dispatch(authActionCreators.setAuth(true))
+                return
+            }
+
+        } catch (e) {
+            console.log(e)
         }
     }
 }
