@@ -17,6 +17,10 @@ const App = () => {
         }
     }, [])
 
+    const getUsers = () => {
+        
+    }
+
     if (loading) {
         return <div>Загрузка...</div>
     }
@@ -39,6 +43,10 @@ const App = () => {
             <Header />
             <div className='content'>
                 <div className='greet'>Вы в системе под { userData.email }</div> 
+                <button 
+                    className='btn'
+                    onClick={ getUsers }
+                >Получить всех пользователей</button>
             </div>   
         </div>
     )
