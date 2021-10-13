@@ -14,4 +14,10 @@ $api.interceptors.request.use((config: AxiosRequestConfig) => {
     return config
 })
 
+$api.interceptors.response.use((responce) => {
+    return responce
+}, async (error) => {
+    console.log(error);
+})
+
 export default $api

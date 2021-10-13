@@ -2,6 +2,7 @@ import axios from 'axios'
 import IUser from '../../../models/IUser'
 import IAuthResponce from '../../../models/responce/IAuthResponce'
 import AuthService from '../../../services/AuthService'
+import usersActionCreators from '../users/action-creators'
 import { AppDispatchType } from './../../index'
 import { AuthActionTypes } from "./types"
 
@@ -51,6 +52,7 @@ const authActionCreators = {
             localStorage.removeItem('token')
             dispatch(authActionCreators.setAuth(false))
             dispatch(authActionCreators.setUser({} as IUser))
+            dispatch(usersActionCreators.setUsers([] as IUser[]))
         } catch (e: any) {
             console.log(e.message)
         }
