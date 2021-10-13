@@ -7,7 +7,7 @@ import useTypedSelector from './hooks/useTypedSelector'
 import authActionCreators from './store/reducers/auth/action-creators'
 
 const App = () => {
-    const { auth, error } = useTypedSelector(state => state.authReducer)
+    const { auth, error, loading } = useTypedSelector(state => state.authReducer)
 
     const dispatch = useDispatch()
 
@@ -17,19 +17,23 @@ const App = () => {
         }
     }, [])
 
+    if (loading) {
+        return <div>Загрузка...</div>
+    }
+
+    if (!auth) {
+        return (
+            <div>
+                <Form />
+                { error && error }
+            </div>
+        )
+    }
+
     return (
         <div>
-            { 
-                auth 
-                ? <div>
-                    <Header />
-                    <div>Вы вошли</div>    
-                </div>
-                : <div>
-                    <Form />
-                    { error && error }
-                </div> 
-            }
+            <Header />
+            <div>Вы вошли</div>    
         </div>
     )
 }

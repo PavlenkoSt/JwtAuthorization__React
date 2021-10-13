@@ -3,6 +3,7 @@ import { AuthStateType, AuthActionCreators, AuthActionTypes } from './types';
 const initialState: AuthStateType = {
     auth: false,
     error: '',
+    loading: false
 }
 
 const authReducer = (state = initialState, action: AuthActionCreators) => {
@@ -13,7 +14,10 @@ const authReducer = (state = initialState, action: AuthActionCreators) => {
         case AuthActionTypes.SET_ERRORS: 
             return { ...state, error: action.payload }
 
-            default: 
+        case AuthActionTypes.SET_LOADING: 
+            return { ...state, loading: action.payload }
+
+        default: 
             return state
     }
 }

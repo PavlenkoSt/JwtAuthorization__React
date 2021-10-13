@@ -7,6 +7,7 @@ import { AuthActionTypes } from "./types"
 const authActionCreators = {
     setAuth: (payload: boolean) => ({ type: AuthActionTypes.SET_AUTH, payload }) as const,
     setError: (payload: string) => ({ type: AuthActionTypes.SET_ERRORS, payload }) as const,
+    setLoading: (payload: boolean) => ({ type: AuthActionTypes.SET_LOADING, payload }) as const,
 
     loginThunk: (email: string, password: string) => async (dispatch: AppDispatchType) => {
         try{
@@ -35,7 +36,7 @@ const authActionCreators = {
             }
 
         } catch (e: any) {
-            console.log(e.message)
+            console.dir(e.message)
             dispatch(authActionCreators.setError('Неккоректная почта или пароль'))
         }
     },
@@ -51,6 +52,7 @@ const authActionCreators = {
     },
 
     checkAuth: () => async (dispatch: AppDispatchType) => {
+        dispatch(authActionCreators.setLoading(true))
         try{
             const responce = await axios.get<IAuthResponce>('http://localhost:5000/api/refresh', { withCredentials: true })
 
@@ -62,6 +64,8 @@ const authActionCreators = {
 
         } catch (e) {
             console.log(e)
+        } finally {
+            dispatch(authActionCreators.setLoading(false))
         }
     }
 }

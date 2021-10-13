@@ -17,6 +17,14 @@ const Form = () => {
         dispatch(authActionCreators.setError('Почта и пароль не могут быть пустыми'))
     }
 
+    const register = () => {
+        if (email && password) {
+            dispatch(authActionCreators.registerThunk(email, password))
+            return
+        }
+        dispatch(authActionCreators.setError('Почта и пароль не могут быть пустыми'))
+    }
+
     return (
         <div>
             <input
@@ -33,7 +41,7 @@ const Form = () => {
                 onClick={ login }
             >Login</button>
             <button
-
+                onClick={ register }
             >Register</button>
         </div>
     )
