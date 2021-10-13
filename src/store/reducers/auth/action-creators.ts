@@ -1,4 +1,5 @@
 import axios from 'axios'
+import IUser from '../../../models/IUser'
 import IAuthResponce from '../../../models/responce/IAuthResponce'
 import AuthService from '../../../services/AuthService'
 import { AppDispatchType } from './../../index'
@@ -8,6 +9,7 @@ const authActionCreators = {
     setAuth: (payload: boolean) => ({ type: AuthActionTypes.SET_AUTH, payload }) as const,
     setError: (payload: string) => ({ type: AuthActionTypes.SET_ERRORS, payload }) as const,
     setLoading: (payload: boolean) => ({ type: AuthActionTypes.SET_LOADING, payload }) as const,
+    setUser: (payload: IUser) => ({ type: AuthActionTypes.SET_USER, payload }) as const,
 
     loginThunk: (email: string, password: string) => async (dispatch: AppDispatchType) => {
         try{
@@ -16,6 +18,7 @@ const authActionCreators = {
             if (responce.status === 200) {
                 localStorage.setItem('token', responce.data.accessToken)
                 dispatch(authActionCreators.setAuth(true))
+                dispatch(authActionCreators.setUser(responce.data.user))
                 return
             }
 
@@ -32,6 +35,7 @@ const authActionCreators = {
             if (responce.status === 200) {
                 localStorage.setItem('token', responce.data.accessToken)
                 dispatch(authActionCreators.setAuth(true))
+                dispatch(authActionCreators.setUser(responce.data.user))
                 return
             }
 
@@ -46,6 +50,7 @@ const authActionCreators = {
             await AuthService.logout()
             localStorage.removeItem('token')
             dispatch(authActionCreators.setAuth(false))
+            dispatch(authActionCreators.setUser({} as IUser))
         } catch (e: any) {
             console.log(e.message)
         }
@@ -59,6 +64,7 @@ const authActionCreators = {
             if (responce.status === 200) {
                 localStorage.setItem('token', responce.data.accessToken)
                 dispatch(authActionCreators.setAuth(true))
+                dispatch(authActionCreators.setUser(responce.data.user))
                 return
             }
 

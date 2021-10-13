@@ -1,13 +1,17 @@
+import IUser from "../../../models/IUser"
+
 export type AuthStateType = {
     auth: boolean,
     error: string,
-    loading: boolean
+    loading: boolean,
+    userData: IUser
 }
 
 export enum AuthActionTypes {
     SET_AUTH = 'SET_AUTH',
     SET_ERRORS = 'SET_ERRORS',
-    SET_LOADING = 'SET_LOADING'
+    SET_LOADING = 'SET_LOADING',
+    SET_USER = 'SET_USER'
 }
 
 type SetAuth = {
@@ -25,7 +29,13 @@ type SetLoading = {
     payload: boolean
 }
 
+type SetUser = {
+    type: AuthActionTypes.SET_USER
+    payload: IUser
+}
+
 export type AuthActionCreators = 
     SetAuth |
     SetErrors |
-    SetLoading
+    SetLoading |
+    SetUser

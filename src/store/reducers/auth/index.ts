@@ -1,9 +1,11 @@
+import IUser from '../../../models/IUser';
 import { AuthStateType, AuthActionCreators, AuthActionTypes } from './types';
 
 const initialState: AuthStateType = {
     auth: false,
     error: '',
-    loading: false
+    loading: false,
+    userData: {} as IUser
 }
 
 const authReducer = (state = initialState, action: AuthActionCreators) => {
@@ -16,6 +18,9 @@ const authReducer = (state = initialState, action: AuthActionCreators) => {
 
         case AuthActionTypes.SET_LOADING: 
             return { ...state, loading: action.payload }
+
+        case AuthActionTypes.SET_USER: 
+            return { ...state, userData: action.payload }
 
         default: 
             return state

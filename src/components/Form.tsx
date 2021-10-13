@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import authActionCreators from '../store/reducers/auth/action-creators'
 
-const Form = () => {
+const FormComponent = () => {
 
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
@@ -26,25 +26,35 @@ const Form = () => {
     }
 
     return (
-        <div>
+        <div
+            className='form'
+        >  
             <input
                 type='email'
                 value={ email }
                 onChange={ (e) => setEmail(e.target.value) }
+                className='input'
+                placeholder='Email'
             />
             <input
                 type='password'
                 value={ password }
                 onChange={ (e) => setPassword(e.target.value) }
+                className='input'
+                placeholder='Password'
             />
             <button
                 onClick={ login }
+                className='form-btn'
             >Login</button>
             <button
                 onClick={ register }
+                className='form-btn'
             >Register</button>
-        </div>
+        </div> 
     )
+
+    
 }
 
-export default Form
+export default FormComponent

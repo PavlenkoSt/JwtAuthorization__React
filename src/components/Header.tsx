@@ -7,11 +7,14 @@ const Header = () => {
     const dispatch = useDispatch()
 
     return (
-        <div>
-            <button
+        <header className='header'>
+            <button 
                 onClick={ () => dispatch(authActionCreators.logoutThunk()) }
-            >Выйти</button>
-        </div>
+                className='btn'
+            >
+                Выйти
+            </button>
+        </header>
     )
 }
 
